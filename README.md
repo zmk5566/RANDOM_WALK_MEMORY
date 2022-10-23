@@ -1,3 +1,3 @@
-# chicago_street_vis
+# Chicago Street VAST
 
 Art VAST project doing in Chicago.
