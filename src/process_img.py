@@ -27,4 +27,5 @@ def exact_color(index, tolerance, zoom):
     return df_color
 
 
-print (exact_color(0, 25, 2.5))
+for i in range(0, 9):
+    exact_color(i, 20, 1)
