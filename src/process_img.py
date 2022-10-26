@@ -23,7 +23,8 @@ def color_to_df(input):
 def exact_color(index, tolerance, zoom):
     colors_x = extcolors.extract_from_path(path_var+str(index)+".jpg", tolerance = tolerance, limit = 13)
     df_color = color_to_df(colors_x)
-    df_color.to_csv('../data/'+str(index)+".csv")  
+    print(df_color)
+    df_color.to_json('../data/'+str(index)+".json", orient = 'records')  
     return df_color
 
 
