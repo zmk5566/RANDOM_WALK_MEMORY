@@ -18,13 +18,14 @@ def color_to_df(input):
                           int(i.split(", ")[2].replace(")",""))) for i in df_rgb]
     
     df = pd.DataFrame(zip(df_color_up, df_percent), columns = ['c_code','occurence'])
+    df = df.T
     return df
 
 def exact_color(index, tolerance, zoom):
     colors_x = extcolors.extract_from_path(path_var+str(index)+".jpg", tolerance = tolerance, limit = 13)
     df_color = color_to_df(colors_x)
     print(df_color)
-    df_color.to_json('../data/'+str(index)+".json", orient = 'records')  
+    df_color.to_csv('../data/'+str(index)+".csv")  
     return df_color
 
 

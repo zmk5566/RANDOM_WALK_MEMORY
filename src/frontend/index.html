@@ -36,10 +36,9 @@ d3.csv("sample.csv").then ( function(data) {
 
   console.log("groups", groups);
   console.log("subgroups",subgroups);
-
+ 
   // Add X axis
   const x = d3.scaleBand()
-      .domain(groups)
       .range([0, width])
       .padding([0])
   svg.append("g")
@@ -75,7 +74,7 @@ d3.csv("sample.csv").then ( function(data) {
     .keys(subgroups)
     (data)
 
-    console.log("stackeddata",stackedData);
+    console.log("stacked",stackedData);
 
   // Show the bars
   svg.append("g")
