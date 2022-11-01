@@ -8,9 +8,10 @@
 <style>
 
 h1{
-  font-size: 58px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: 52.33px;
+margin-top: 20px;
+margin-bottom: 10px;
+margin-left: -4px;
 }
 
 html{
@@ -28,7 +29,7 @@ html{
 }
 .grid-item {
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 0px solid rgba(0, 0, 0, 0.8);
   font-size: 60px;
   text-align: center;
 }
@@ -42,7 +43,7 @@ html{
 }
 .start-grid-item {
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 0px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
   font-size: 30px;
   text-align: center;
@@ -60,6 +61,9 @@ grid-template-columns: repeat(5, 1fr);
 grid-template-rows: repeat(3, 1fr);
 grid-column-gap: 0px;
 grid-row-gap: 0px;
+}
+.fusion{
+  background-color: #604aed;
 }
 
 .div1 {
@@ -80,7 +84,12 @@ grid-row-gap: 0px;
   overflow: hidden;
   
 }
-.div4 { grid-area: 6 / 2 / 7 / 3; }
+.div4 { 
+  grid-area: 6 / 2 / 7 / 3; 
+  height:156px;
+
+
+}
 .div5 {
   
 grid-area: 4 / 3 / 7 / 6; 
@@ -108,7 +117,6 @@ body{
   display: flex;
   width: 100%;
   font-size: 30px;
-
 }
 
 .flex-child-element {
@@ -132,10 +140,12 @@ body{
 
     <div class="parent">
       <div class="div1" id="div1"> 
-        <div><h1>RANDOM WALK MEMORY</h1></div>
+        <div style="width:102%"><h1>
+          10 RANDOM WALK MEMORY
+        </h1></div>
 
         <div class="flex-parent-element">
-          <div class="flex-child-element left">OCT 28 2022</div>
+          <div class="flex-child-element left" style="margin-left: -2px;">OCT 28 2022</div>
           <div class="flex-child-element right">
             <div class="single_sel_button"><span>●</span>   PIC </div>
             <div class="single_sel_button"><span>●</span>   MAP </div>
@@ -146,7 +156,7 @@ body{
       </div>
 
       <div class="flex-parent-element">CHICAGO</div>
-      <div class="parent">
+      <div class="parent fusion">
 
       <div class="div2">
         <div class="video-wrapper">
@@ -175,7 +185,12 @@ body{
           </div>
 
       </div>
-      <div class="div4"> </div>
+      <div class="div4"> 
+        <div id="small_vis_chart">
+
+        </div>
+
+      </div>
       <div class="div5"> 
       <div class="video-wrapper" style="margin-top: -44.5%;">
 
@@ -221,6 +236,8 @@ body{
         }
       }
       )
+
+      
         ;
 
 
@@ -238,6 +255,7 @@ body{
     shooting_player.src = "../../../resources/ramdon-walk-video/"+(current_index)+".mp4";
     shooting_player.load();
 
+    draw_tiny_index(input_index);
 
     console.log("triger_index_block",input_index);
     update_the_image_by_index(input_index);
@@ -259,6 +277,7 @@ body{
     started_shooting_video=false;
     shooting_player.src = "../../../resources/ramdon-walk-video/"+(current_index)+".mp4";
     shooting_player.load();
+    draw_tiny_index(input_index);
 
 
     console.log("triger_index_block",input_index);
@@ -302,6 +321,8 @@ shooting_player.addEventListener("timeupdate", function(){
   }
 })
 ;
+
+draw_tiny_index(1);
 
 
   
