@@ -1,3 +1,3 @@
-# Chicago Street exploration VAST
+# RANDOM_WALK_MEMORY
 
 PRETTY RANDOM, VERY WALK, SO MEMORABLE
