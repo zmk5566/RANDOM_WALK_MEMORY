@@ -5,7 +5,7 @@ import cv2
 import extcolors
 from colormap import rgb2hex
 
-path_var  = "../resources/street-view/"
+path_var  = "../resources/random-walk-images/"
 
 def color_to_df(input):
     colors_pre_list = str(input).replace('([(','').split(', (')[0:-1]
@@ -29,5 +29,5 @@ def exact_color(index, tolerance, zoom):
     return df_color
 
 
-for i in range(0, 9):
+for i in range(77, 80):
     exact_color(i, 20, 1)

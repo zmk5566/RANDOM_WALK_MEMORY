@@ -3,176 +3,307 @@
 
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v6.js"></script>
+<link href="http://fonts.cdnfonts.com/css/sf-pixelate" rel="stylesheet">
+                
+<style>
+
+h1{
+  font-size: 58px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+html{
+  background-color: #a18fff;
+  color: #604aed;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(13, 60px);
+  grid-template-rows: repeat(6, 60px);
+  background-color: #2196F3;
+  justify-content: center;
+  align-content: center;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 60px;
+  text-align: center;
+}
+
+
+.start-grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.start-grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+#the_matrix{
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+}
+
+.parent {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+grid-template-rows: repeat(3, 1fr);
+grid-column-gap: 0px;
+grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 4 / 6; 
+  position: relative;
+  height : 514px;
+}
+.div2 { 
+  
+  grid-area: 4 / 1 / 6 / 3; 
+  height:312px;
+  overflow: hidden;
+  display: block;
+
+
+}
+.div3 { grid-area: 6 / 1 / 7 / 2; 
+  overflow: hidden;
+  
+}
+.div4 { grid-area: 6 / 2 / 7 / 3; }
+.div5 {
+  
+grid-area: 4 / 3 / 7 / 6; 
+overflow: hidden;
+display: block;
+height: 468px;
+
+
+} 
+
+body{
+  width:780px;
+  margin:40px auto; 
+  font-family: 'SF Pixelate', sans-serif;
+                                                
+}
+
+.image_wrapper{
+  width : 156px;
+  height: 156px;
+}
+
+
+.flex-parent-element {
+  display: flex;
+  width: 100%;
+  font-size: 30px;
+
+}
+
+.flex-child-element {
+  flex: 1;
+  margin: 0px;
+}
+
+.single_sel_button{
+  display: inline;
+  margin-left:10px;
+  float: right;
+}
+
+
+
+  </style>
 
 <!-- Create a div where the graph will take place -->
 <body>
-<div id="my_dataviz"></div>
+
+
+    <div class="parent">
+      <div class="div1" id="div1"> 
+        <div><h1>RANDOM WALK MEMORY</h1></div>
+
+        <div class="flex-parent-element">
+          <div class="flex-child-element left">OCT 28 2022</div>
+          <div class="flex-child-element right">
+            <div class="single_sel_button"><span>●</span>   PIC </div>
+            <div class="single_sel_button"><span>●</span>   MAP </div>
+            <div class="single_sel_button"><span>●</span>   CLR </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="flex-parent-element">CHICAGO</div>
+      <div class="parent">
+
+      <div class="div2">
+        <div class="video-wrapper">
+        <video
+        id="shooting-video"
+        class="video-js"
+        preload="auto"
+        width="280"
+        data-setup="{}"
+      >
+        <source src="../../../resources/ramdon-walk-video/1.mp4" type="video/mp4" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+      
+      </div>
+
+    </div>
+      <div class="div3"> 
+
+        <div class="image_wrapper" > 
+          <img id="myImg" src="../../../resources/random-walk-images/0.jpg"  width="156">
+          </div>
+
+      </div>
+      <div class="div4"> </div>
+      <div class="div5"> 
+      <div class="video-wrapper" style="margin-top: -44.5%;">
+
+        <video
+        id="my-video"
+        class="video-js"
+        preload="auto"
+        width="468"
+        data-setup="{}"
+      >
+        <source src="../../../resources/ramdon-walk-gps/gps.mp4" type="video/mp4" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a
+          >
+        </p>
+      </video>
+    </div>
+
+
+      </div>
+      </div> 
+
 
 </body>
-<script>
-// set the dimensions and margins of the graph
-const margin = {top: 0, right: 0, bottom: 0, left: 0},
-    width = 200,
-    height = 200;
 
-// append the svg object to the body of the page
-const svg = d3.select("#my_dataviz")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+<footer>
+  <script  src="draw_main_graph.js"> </script>
+  <script> 
+    
+        var gps_data = []
+        var next_stop = 999;
+        var current_index = 0 ;
+        var video_player = document.getElementById("my-video");
+        var shooting_player = document.getElementById("shooting-video");
+        var started_shooting_video = false;
+        d3.csv("../../../data/data-gps.csv").then(function(data) {
+          gps_data = data;
+          console.log(gps_data);
+        for (let i = 0;i<data.length;i++){
+          data[i]["seconds"] =parseInt(data[i]["time"].split(":")[0]*60)+parseInt(data[i]["time"].split(":")[1]);
+        }
+      }
+      )
+        ;
 
-// Parse the Data
-d3.csv("sample.csv").then ( function(data) {
 
-  // List of subgroups = header of the csv files = soil condition here
-  console.log(data);
-  const subgroups = data.columns.slice(1)
-  console.log(subgroups);
 
-  // List of groups = species here = value of the first column called group -> I show them on the X axis
-  const groups = data.map(d => d.group)
+  function triger_index_block(input_index){
+    if (input_index<79){
 
-  console.log("groups", groups);
-  console.log("subgroups",subgroups);
- 
-  // Add X axis
-  const x = d3.scaleBand()
-      .range([0, width])
-      .padding([0])
-  svg.append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x).tickSizeOuter(0));
 
-  // Add Y axis
-  const y = d3.scaleLinear()
-    .domain([0, 100])
-    .range([ height, 0 ]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
 
-  // color palette = one color per subgroup
-  const color = d3.scaleOrdinal()
-    .domain(subgroups)
-    .range(['#e41a1c','#377eb8','#4daf4a'])
+    current_index = input_index;
 
-  // Normalize the data -> sum of each group must be 100!
-  console.log(data)
-  dataNormalized = []
-  data.forEach(function(d){
-    // Compute the total
-    console.log(d)
-    tot = 0
-    for (i in subgroups){ name=subgroups[i] ; tot += +d[name] }
-    // Now normalize
-    for (i in subgroups){ name=subgroups[i] ; d[name] = d[name] / tot * 100}
-  })
 
-  //stack the data? --> stack per subgroup
-  const stackedData = d3.stack()
-    .keys(subgroups)
-    (data)
+    shooting_player.pause();
+    started_shooting_video=false;
+    shooting_player.src = "../../../resources/ramdon-walk-video/"+(current_index)+".mp4";
+    shooting_player.load();
 
-    console.log("stacked",stackedData);
 
-  // Show the bars
-  svg.append("g")
-    .selectAll("g")
-    // Enter in the stack data = loop key per key = group per group
-    .data(stackedData)
-    .join("g")
-      .attr("fill", d => color(d.key))
-      .selectAll("rect")
-      // enter a second time = loop subgroup per subgroup to add all rectangles
-      .data(d => d)
-      .join("rect")
-        .attr("x", d => x(d.data.group))
-        .attr("y", d => y(d[1]))
-        .attr("height", d => y(d[0]) - y(d[1]))
-        .attr("width",x.bandwidth())
+    console.log("triger_index_block",input_index);
+    update_the_image_by_index(input_index);
+    next_stop = gps_data[input_index]["seconds"];
+    video_player.currentTime = gps_data[input_index-1]["seconds"];
+    video_player.play();
+
+  }
+    //trigger the specific index
+  }
+
+  function triger_next_block(input_index){
+
+    if (input_index<79){
+
+    current_index = input_index;
+
+    shooting_player.pause();
+    started_shooting_video=false;
+    shooting_player.src = "../../../resources/ramdon-walk-video/"+(current_index)+".mp4";
+    shooting_player.load();
+
+
+    console.log("triger_index_block",input_index);
+    update_the_image_by_index(input_index);
+    next_stop = gps_data[input_index]["seconds"];
+    //video_player.currentTime = gps_data[input_index-1]["seconds"];
+    video_player.play();
+    //trigger the specific index
+  }
+}
+
+  function update_the_image_by_index(input_index){
+    document.getElementById("myImg").src = "../../../resources/random-walk-images/"+input_index+".jpg";
+  }
+
+
+  video_player.addEventListener("timeupdate", function(){
+    console.log("video_player.currentTime",video_player.currentTime);
+    if(video_player.currentTime >= next_stop+0.05) {
+      next_stop=999;
+        this.pause();
+        //update_the_image_by_index(current_index+1);
+
+        //alert("ready for the next block");
+        shooting_player.play();
+        started_shooting_video = true;
+
+        
+        //const myTimeout = setTimeout(myStopFunction, 2000);
+
+        function myStopFunction() {
+          triger_next_block(current_index+1);
+        }
+        
+    }
 })
 
+shooting_player.addEventListener("timeupdate", function(){
+  if (shooting_player.paused && started_shooting_video == true){
+    triger_next_block(current_index+1);
+  }
+})
+;
 
 
-
-//     var ground_data = [];
-
-//     function draw_index(index){
-
-//     var temp_element = document.createElement("div");
-//     var temp_id  = "graph_index"+index;
-//     temp_element.setAttribute("id", temp_id);
-//     document.body.appendChild(temp_element);
-
-
-//     // set the dimensions and margins of the graph
-//     const margin = {top:0, right: 0, bottom: 0, left: 0},
-//         width = 200,
-//         height = 200;
-    
-//     // append the svg object to the body of the page
-//     // const svg =d3.select("#"+temp_id)
-//     //   .append("svg")
-//     //     .attr("width", width + margin.left + margin.right)
-//     //     .attr("height", height + margin.top + margin.bottom)
-//     //   .append("g")
-//     //     .attr("transform", `translate(${margin.left},${margin.top})`);
-    
-//     // Parse the Data 
-//     d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv").then ( function(data) {
-    
-//       // List of subgroups = header of the csv files = soil condition here
-//       console.log(data);
-//       ground_data = data;
-//       const subgroups = data.columns.slice(1)
-
-// // List of groups = species here = value of the first column called group -> I show them on the X axis
-// const groups = data.map(d => d.group)
-
-//       //const temp = data.slice();
-//       //const subgroups = temp[0];
-//       //console.log(subgroups);
-    
-//       // List of groups = species here = value of the first column called group -> I show them on the X axis
-
-
-//          // Add X axis
-//   const x = d3.scaleBand()
-//       .domain(groups)
-//       .range([0, width])
-//       .padding([0.2])
-//   svg.append("g")
-//     .attr("transform", `translate(0, ${height})`)
-//     .call(d3.axisBottom(x).tickSizeOuter(0));
-
-//   // Add Y axis
-//   const y = d3.scaleLinear()
-//     .domain([0, 100])
-//     .range([ height, 0 ]);
-//   svg.append("g")
-//     .call(d3.axisLeft(y));
-
-//   // color palette = one color per subgroup
-//   const color = d3.scaleOrdinal()
-//     .domain(subgroups)
-//     .range(['#e41a1c','#377eb8','#4daf4a'])
-
-//   // Normalize the data -> sum of each group must be 100!
-//   console.log(data)
-//   dataNormalized = []
-//   data.forEach(function(d){
-//     // Compute the total
-//     tot = 0
-//     for (i in subgroups){ name=subgroups[i] ; tot += +d[name] }
-//     // Now normalize
-//     for (i in subgroups){ name=subgroups[i] ; d[name] = d[name] / tot * 100}
-//   })
-
-// })}
-    
   
-
-
-    
-    </script>
+  </script>
+</footer>
